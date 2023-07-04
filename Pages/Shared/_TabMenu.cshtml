@@ -1,0 +1,253 @@
+﻿@page
+@model LifeNOTE_BIZ.Pages.Shared._TabMenuModel
+@{
+}
+<style type="text/css">
+
+    .bodytag {
+        background-image: url(back01.png); /* 背景画像指定 */
+    }
+    
+</style>
+<form method="post" name="modalscreens">
+    <div id="exampleModal1" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title">追加するタブの名前を入力してください。</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <input type="text" class="form-control" id="tabname" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="AddTab()">タブ追加</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exampleModal2" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <label for="id"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title" id="deletetitle">タブ「 @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.titlenamelist[IndexModel.selecttab - 1])))」を非表示にします。</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InactiveTab()">タブ非表示</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exampleModal4" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title" id="change"></h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="TytleChange()">更新</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal5" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title" id="deletetitle"></h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="DeleteDoc()">削除</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal6" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <label for="id"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <select id="show" height="auto" width="auto" size="5">
+                                    @for (int i = 0; i <= IndexModel.inacttitlenamelist.Count - 1; i++)
+                                    {
+                                        <option value=@i>@IndexModel.inacttitlenamelist[i]</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowTab()">タブ表示</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal7" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <label for="id"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title" id="deletetitle">タブ「 @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.titlenamelist[IndexModel.selecttab - 1])))」を削除します。</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="DeleteTab()">タブ削除</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal8" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <h5 class="modal-title" id="newtitle"></h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <input type="text" class="form-control" id="title2">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Newdoc()">追加</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal9" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body bodytag" style="border-width:0px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <label for="id"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom:20px;">
+                                <input type="text" class="form-control" id="tabname2" value="@IndexModel.SelectedTabName" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="TabNameChange()">タブ名変更</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

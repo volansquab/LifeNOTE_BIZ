@@ -1,0 +1,259 @@
+﻿@page
+@model LifeNOTE_BIZ.Pages.UploadModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@if (@IndexModel.screenmode == "upload1")
+{
+    <!DOCTYPE html>
+    <html lang="ja">
+    <style type="text/css">
+
+        body {
+            background-image: url(back01.png); /* 背景画像指定 */
+            margin: auto;
+        }
+    </style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Life NOTE</title>
+        <body>
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="itemtitle col-md-12">
+                        <input type="file" asp-for="Upload" multiple class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="itemtitle col-md-6">
+                        <input type="submit" value="アップロード" class="btn btn-secondary" onclick="UP();">
+                        <input type="checkbox" id="upflag" name="upflag"
+                               checked>
+                        <label for="scales">同じ名前のファイルをアップロードしない。</label>
+                        <input type="hidden" name="upflag" id="upflag" />
+                        <input type="hidden" name="type" value="uploadup1" />
+                    </div>
+                </div>
+            </form>
+            <form method="post">
+                <p class="tab1">
+
+                    <div class="row">
+                        <div class="col-md-6" style="margin-bottom:20px;">
+                            <select id="upload" height="auto" width="auto" size="10">
+                                @foreach (string @element in IndexModel.Attachfiles)
+                                {
+                                    <option value=@element>@element</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="itemtitle col-md-6">
+                            <input type="button" value="削除" id="search" class="btn btn-secondary" onclick="Delete();">
+                            <input type="button" value="OK" id="search" class="btn btn-secondary" onclick="OK();">
+                        </div>
+                    </div>
+
+                </p>
+            </form>
+        </body>
+    </head>
+    </html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+    <script type="text/javascript">
+
+        function OK() {
+            const form = document.forms[1];
+            FD = new FormData(form);
+            //// データを FormData オブジェクトに投入します
+            FD.append("evnt", "uploadok1");
+
+            // aysnchronous fetch ajax
+            fetch(form.action,
+                {
+                    method: form.method,
+                    body: FD
+                });
+
+            //setTimeout(function () { window.location.reload(true); }, 500)
+
+            window.location.reload(true);
+            //document.location.reload(true);
+
+        }
+        function Delete() {
+            const form = document.forms[1];
+            const str = document.getElementById("upload").value;
+            FD = new FormData(form);
+
+            // データを FormData オブジェクトに投入します
+            FD.append("evnt", "delete");
+            FD.append("delete", str);
+            FD.append("index", "upload1");
+            // aysnchronous fetch ajax
+            fetch(form.action,
+                {
+                    method: form.method,
+                    body: FD
+                });
+            setTimeout(function () { window.location.reload(true); }, 500)
+        }
+
+        function banMenu(e) { e.preventDefault(); }
+        //★休止解除予定
+        document.addEventListener("contextmenu", banMenu, false);
+
+        function myHandler3(e) {
+            if (e.keyCode == 123) {
+                /*alert("F12");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.keyCode == 85) {
+                /*alert("CTRL+U");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                /*alert("CTRL+Shift+I");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        }
+        document.addEventListener("keydown", myHandler3, false);
+
+
+    </script>
+}
+@if (@IndexModel.screenmode == "upload2")
+{
+    <!DOCTYPE html>
+    <html lang="ja">
+    <style type="text/css">
+
+        body {
+            background-image: url(back01.png); /* 背景画像指定 */
+            margin: auto;
+        }
+    </style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Life NOTE</title>
+        <body>
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="itemtitle col-md-12">
+                        <input type="file" asp-for="Upload" multiple class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="itemtitle col-md-6">
+                        <input type="submit" value="アップロード" class="btn btn-secondary" onclick="UP();">
+                        <input type="checkbox" id="upflag" name="upflag"
+                               checked>
+                        <label for="scales">同じ名前のファイルをアップロードしない。</label>
+                        <input type="hidden" name="upflag" id="upflag" />
+                        <input type="hidden" name="type" value="uploadup2" />
+                    </div>
+                </div>
+            </form>
+            <form method="post">
+                <p class="tab1">
+
+                    <div class="row">
+                        <div class="col-md-6" style="margin-bottom:20px;">
+                            <select id="upload" height="auto" width="auto" size="10">
+                                @foreach (string @element in IndexModel.Attachfiles)
+                                {
+                                    <option value=@element>@element</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="itemtitle col-md-6">
+                            <input type="button" value="削除" id="search" class="btn btn-secondary" onclick="Delete();">
+                            <input type="button" value="OK" id="search" class="btn btn-secondary" onclick="OK();">
+                        </div>
+                    </div>
+
+                </p>
+            </form>
+        </body>
+    </head>
+    </html>
+    <script type="text/javascript">
+        function OK() {
+            const form = document.forms[1];
+            FD = new FormData(form);
+            // データを FormData オブジェクトに投入します
+            FD.append("evnt", "uploadok2");
+            // aysnchronous fetch ajax
+            fetch(form.action,
+                {
+                    method: form.method,
+                    body: FD
+                });
+            window.location.reload(true);
+            //setTimeout(function () { window.location.reload(true); }, 500)
+        }
+        function Delete() {
+            const form = document.forms[1];
+            const str = document.getElementById("upload").value;
+            FD = new FormData(form);
+
+            // データを FormData オブジェクトに投入します
+            FD.append("evnt", "delete");
+            FD.append("delete", str);
+            FD.append("index", "upload2");
+            // aysnchronous fetch ajax
+            fetch(form.action,
+                {
+                    method: form.method,
+                    body: FD
+                });
+            window.location.reload(true);
+            setTimeout(function () { window.location.reload(true); }, 500)
+        }
+        function banMenu(e) { e.preventDefault(); }
+        //★休止解除予定
+        document.addEventListener("contextmenu", banMenu, false);
+
+        function myHandler3(e) {
+            if (e.keyCode == 123) {
+                /*alert("F12");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.keyCode == 85) {
+                /*alert("CTRL+U");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                /*alert("CTRL+Shift+I");*/
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        }
+        document.addEventListener("keydown", myHandler3, false);
+
+    </script>
+}
+@if (@IndexModel.screenmode == "normal")
+{
+    { Response.Redirect("Index"); }
+
+}
+@if (@IndexModel.screenmode == "searched")
+{
+    { Response.Redirect("Index"); }
+}
+
+
