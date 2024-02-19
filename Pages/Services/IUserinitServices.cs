@@ -68,8 +68,10 @@ namespace LifeNOTE_BIZ.Pages.Services
             var diststr_new_m_s = "マニュアル-S.csv";
             ////    //If so, do what needs to be done
             //Initialize Service
+
             Init.InitService(isNewUser, accountName, accessKey, containerName_setting, diststr_loclist, containerName_file, containerName_folder, diststr_new, diststr_new_s, diststr_new_m, diststr_new_m_s, diststr_files, diststr_files_s);
             saveAllUser(userOId, userName, enrolleddate);
+
             //await Task.Delay(500);
         }
 
@@ -253,39 +255,39 @@ namespace LifeNOTE_BIZ.Pages.Services
         public async Task<List<string>> GetInitialTitlesAsync(String userOId, String accountName, String accessKey,int selecttab)
         {
 
-            //var credential = new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(accountName, accessKey);
-            //var storageAccount = new Microsoft.WindowsAzure.Storage.CloudStorageAccount(credential, true);
-            ////blob
-            //CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            //containerName_setting = userOId + "-filemanage";
-            //// Retrieve reference to a previously created container.
-            //CloudBlobContainer container2 = blobClient.GetContainerReference(containerName_setting);
-            //var tabNo = selecttab.ToString() + ".xml";
-            ////HTML生成用序数詞リスト読み込み
-            //CloudBlockBlob blockBlob4 = container2.GetBlockBlobReference(tabNo);
+            var credential = new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(accountName, accessKey);
+            var storageAccount = new Microsoft.WindowsAzure.Storage.CloudStorageAccount(credential, true);
+            //blob
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            containerName_setting = userOId + "-filemanage";
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container2 = blobClient.GetContainerReference(containerName_setting);
+            var tabNo = selecttab.ToString() + ".xml";
+            //HTML生成用序数詞リスト読み込み
+            CloudBlockBlob blockBlob4 = container2.GetBlockBlobReference(tabNo);
 
-            //string files4;
-            //using (var memoryStream4 = new MemoryStream())
-            //{
-            //    await blockBlob4.DownloadToStreamAsync(memoryStream4);
-            //    files4 = System.Text.Encoding.UTF8.GetString(memoryStream4.ToArray());
-            //}
+            string files4;
+            using (var memoryStream4 = new MemoryStream())
+            {
+                await blockBlob4.DownloadToStreamAsync(memoryStream4);
+                files4 = System.Text.Encoding.UTF8.GetString(memoryStream4.ToArray());
+            }
 
-            //// convert string to stream
-            //byte[] byteArray4 = Encoding.UTF8.GetBytes(files4);
-            ////byte[] byteArray = Encoding.ASCII.GetBytes(contents);
-            //MemoryStream stream4 = new MemoryStream(byteArray4);
-            //// convert stream to string
-            //StreamReader reader4 = new StreamReader(stream4);
-            //XmlSerializer serializer2 = new XmlSerializer(typeof(TitleLists));
+            // convert string to stream
+            byte[] byteArray4 = Encoding.UTF8.GetBytes(files4);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
+            MemoryStream stream4 = new MemoryStream(byteArray4);
+            // convert stream to string
+            StreamReader reader4 = new StreamReader(stream4);
+            XmlSerializer serializer2 = new XmlSerializer(typeof(TitleLists));
             TitleLists myTitleLists = new TitleLists();
-            //titlelists = (TitleLists)serializer2.Deserialize(reader4);
-            
+            titlelists = (TitleLists)serializer2.Deserialize(reader4);
 
-            //foreach (var doc in titlelists.DocList)
-            //{
-            //    titlenamelist.Add(doc.Title);
-            //}
+
+            foreach (var doc in titlelists.DocList)
+            {
+                titlenamelist.Add(doc.Title);
+            }
             return titlenamelist;
         }
 
