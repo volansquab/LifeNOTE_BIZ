@@ -167,7 +167,10 @@ namespace LifeNOTE_BIZ.Pages
             accountName = _configuration.GetValue<string>("accountName");
             accessKey = _configuration.GetValue<string>("accessKey");
             //新規ユーザーの場合の処理
-            _userinit.InitNewUser(isNewUser,userOId,username, accountName, accessKey);
+            if(isNewUser)
+            {
+                _userinit.InitNewUser(isNewUser, userOId, username, accountName, accessKey);
+            }
             //await Task.Delay(500);
 
             ////タブ色のリスト読み込み

@@ -77,7 +77,7 @@ namespace LifeNOTE_BIZ.Pages.Services
 
         public async Task<string[]> GetInitialNumbersAsync(String userOId, String accountName, String accessKey)
         {
-
+            
             var credential = new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(accountName, accessKey);
             var storageAccount = new Microsoft.WindowsAzure.Storage.CloudStorageAccount(credential, true);
             containerName_setting = userOId + "-setting";
