@@ -321,8 +321,8 @@ namespace LifeNOTE_BIZ.Pages.Services
         public static async void InactiveTab()
         {
             //リストに追加
-            var diststr = IndexModel.titlenamelist[IndexModel.selecttab - 1] + ".csv";
-            var diststr2 = IndexModel.titlenamelist[IndexModel.selecttab - 1] + "-S.csv";
+            var diststr = IndexModel.tablists[IndexModel.selecttab - 1] + ".csv";
+            var diststr2 = IndexModel.tablists[IndexModel.selecttab - 1] + "-S.csv";
 
             for (int i = 0; i <= IndexModel.result.Items.Count - 1; i++)
             {

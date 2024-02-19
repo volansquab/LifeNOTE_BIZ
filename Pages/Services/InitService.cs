@@ -175,103 +175,103 @@ namespace LifeNOTE_BIZ.Pages.Services
                 }
             }
         }
-        public static async void StateDivider(LocClass Loc, ConvLoc ConvLoc)
-        {
-            if (IndexModel.screenmode == "searched")
-            {
-                IndexModel.tss7 = IndexModel.GetAllDoc(IndexModel.containerName_setting);
-                await Task.WhenAll(IndexModel.tss7);
-                //元ファイルタブ表示の切り替え
-                if (IndexModel.selecttab == 0)
-                {
-                    IndexModel.selecttab = 1;
-                }
-                //
-                var locstr1 = (LocItem)IndexModel.Loc.Items[IndexModel.selecttab - 1];
-                var locstr = locstr1.Loc1;
-                //★
-                IndexModel.title = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Title;
-                IndexModel.bodyelement = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
-                IndexModel.updatedate = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Upddate;
-                IndexModel.author = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Updauther;
-                IndexModel.attachfile = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
-                IndexModel.scrollloc = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
-                var locstr_1 = (ConvLocItem)ConvLoc.Items[IndexModel.selecttab - 1];
-                var loc2 = locstr_1.mainid;
-                //var locstr_1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
-                //var tabno = locstr_1.ID;
-                var titlestr_1 = (TitleItem)IndexModel.result.Items[loc2];
-                IndexModel.SelectedTabName = titlestr_1.Title;
-                IndexModel.SelectedTabName = IndexModel.SelectedTabName.Replace(".csv", "");
+        //public static async void StateDivider(LocClass Loc, ConvLoc ConvLoc)
+        //{
+        //    if (IndexModel.screenmode == "searched")
+        //    {
+        //        IndexModel.tss7 = IndexModel.GetAllDoc(IndexModel.containerName_setting);
+        //        await Task.WhenAll(IndexModel.tss7);
+        //        //元ファイルタブ表示の切り替え
+        //        if (IndexModel.selecttab == 0)
+        //        {
+        //            IndexModel.selecttab = 1;
+        //        }
+        //        //
+        //        var locstr1 = (LocItem)IndexModel.Loc.Items[IndexModel.selecttab - 1];
+        //        var locstr = locstr1.Loc1;
+        //        //★
+        //        IndexModel.title = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Title;
+        //        IndexModel.bodyelement = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
+        //        IndexModel.updatedate = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Upddate;
+        //        IndexModel.author = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Updauther;
+        //        IndexModel.attachfile = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
+        //        IndexModel.scrollloc = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
+        //        var locstr_1 = (ConvLocItem)ConvLoc.Items[IndexModel.selecttab - 1];
+        //        var loc2 = locstr_1.mainid;
+        //        //var locstr_1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
+        //        //var tabno = locstr_1.ID;
+        //        var titlestr_1 = (TitleItem)IndexModel.result.Items[loc2];
+        //        IndexModel.SelectedTabName = titlestr_1.Title;
+        //        IndexModel.SelectedTabName = IndexModel.SelectedTabName.Replace(".csv", "");
 
-                IndexModel.tss6 = IndexModel.GetsrcAllDoc(IndexModel.containerName_setting);
-                await Task.WhenAll(IndexModel.tss6);
+        //        IndexModel.tss6 = IndexModel.GetsrcAllDoc(IndexModel.containerName_setting);
+        //        await Task.WhenAll(IndexModel.tss6);
 
-                //
-                //元ファイルタブ表示の切り替え
-                if (IndexModel.selecttab == 0)
-                {
-                    IndexModel.selecttab = 1;
-                }
-                var locstr12 = (LocItem)IndexModel.Loc.Items[IndexModel.selecttab - 1];
-                locstr = locstr12.Loc2;
+        //        //
+        //        //元ファイルタブ表示の切り替え
+        //        if (IndexModel.selecttab == 0)
+        //        {
+        //            IndexModel.selecttab = 1;
+        //        }
+        //        var locstr12 = (LocItem)IndexModel.Loc.Items[IndexModel.selecttab - 1];
+        //        locstr = locstr12.Loc2;
 
-                if (IndexModel.srcAlldoc[IndexModel.selecttab - 1].Count != 0)
-                {
-                    IndexModel.title = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Title;
-                    IndexModel.bodyelement2 = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
-                    IndexModel.bodyelement = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
-                    IndexModel.updatedate = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Upddate;
-                    IndexModel.author = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Updauther;
-                    IndexModel.attachfile = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
-                    IndexModel.scrollloc = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
-                }
-                else
-                {
-                    IndexModel.bodyelement = "";
-                }
-                IndexModel.datasize = IndexModel.titlenamelist.Count;
-            }
-            else
-            {
+        //        if (IndexModel.srcAlldoc[IndexModel.selecttab - 1].Count != 0)
+        //        {
+        //            IndexModel.title = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Title;
+        //            IndexModel.bodyelement2 = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
+        //            IndexModel.bodyelement = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
+        //            IndexModel.updatedate = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Upddate;
+        //            IndexModel.author = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Updauther;
+        //            IndexModel.attachfile = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
+        //            IndexModel.scrollloc = IndexModel.srcAlldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
+        //        }
+        //        else
+        //        {
+        //            IndexModel.bodyelement = "";
+        //        }
+        //        IndexModel.datasize = IndexModel.tablists.Count;
+        //    }
+        //    else
+        //    {
 
-                IndexModel.tss6 = IndexModel.GetAllDoc(IndexModel.containerName_setting);
-                await Task.WhenAll(IndexModel.tss6);
+        //        IndexModel.tss6 = IndexModel.GetAllDoc(IndexModel.containerName_setting);
+        //        await Task.WhenAll(IndexModel.tss6);
 
-                await Task.Delay(500);
-                //元ファイルタブ表示の切り替え
-                if (IndexModel.selecttab == 0)
-                {
-                    IndexModel.selecttab = 1;
-                }
-                //
-                var locstr1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
-                var locstr = locstr1.Loc1;
-                //★2
-                IndexModel.title = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Title;
-                IndexModel.bodyelement = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
-                IndexModel.updatedate = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Upddate;
-                IndexModel.author = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Updauther;
-                IndexModel.attachfile = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
-                IndexModel.scrollloc = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
-                var locstr_1 = (ConvLocItem)ConvLoc.Items[IndexModel.selecttab - 1];
-                var loc = locstr_1.mainid;
-                //var locstr_1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
-                //var tabno = locstr_1.ID;
-                var titlestr_1 = (TitleItem)IndexModel.result.Items[loc];
-                IndexModel.SelectedTabName = titlestr_1.Title;
-                IndexModel.SelectedTabName = IndexModel.SelectedTabName.Replace(".csv", "");
-            }
-            if (IndexModel.selecttab == IndexModel.datasize)
-            {
-                IndexModel.activetabname = "tab3_" + IndexModel.selecttab;
-                IndexModel.activetabname2 = "tab3_" + (IndexModel.selecttab - 1).ToString();
-            }
-            else
-            {
-                IndexModel.activetabname = "tab3_" + IndexModel.selecttab;
-                IndexModel.activetabname2 = "tab3_" + IndexModel.selecttab + 1;
-            }
-        }
+        //        await Task.Delay(500);
+        //        //元ファイルタブ表示の切り替え
+        //        if (IndexModel.selecttab == 0)
+        //        {
+        //            IndexModel.selecttab = 1;
+        //        }
+        //        //
+        //        var locstr1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
+        //        var locstr = locstr1.Loc1;
+        //        //★2
+        //        IndexModel.title = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Title;
+        //        IndexModel.bodyelement = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Htmlbody;
+        //        IndexModel.updatedate = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Upddate;
+        //        IndexModel.author = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Updauther;
+        //        IndexModel.attachfile = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Attchfiles;
+        //        IndexModel.scrollloc = IndexModel.Alldoc[IndexModel.selecttab - 1][locstr].Scroolloc;
+        //        var locstr_1 = (ConvLocItem)ConvLoc.Items[IndexModel.selecttab - 1];
+        //        var loc = locstr_1.mainid;
+        //        //var locstr_1 = (LocItem)Loc.Items[IndexModel.selecttab - 1];
+        //        //var tabno = locstr_1.ID;
+        //        var titlestr_1 = (TitleItem)IndexModel.result.Items[loc];
+        //        IndexModel.SelectedTabName = titlestr_1.Title;
+        //        IndexModel.SelectedTabName = IndexModel.SelectedTabName.Replace(".csv", "");
+        //    }
+        //    if (IndexModel.selecttab == IndexModel.datasize)
+        //    {
+        //        IndexModel.activetabname = "tab3_" + IndexModel.selecttab;
+        //        IndexModel.activetabname2 = "tab3_" + (IndexModel.selecttab - 1).ToString();
+        //    }
+        //    else
+        //    {
+        //        IndexModel.activetabname = "tab3_" + IndexModel.selecttab;
+        //        IndexModel.activetabname2 = "tab3_" + IndexModel.selecttab + 1;
+        //    }
+        //}
     }
 }

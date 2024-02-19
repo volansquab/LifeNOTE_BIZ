@@ -1,3 +1,4 @@
+using LifeNOTE_BIZ.Pages.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +19,8 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddRazorPages()
     .AddMicrosoftIdentityUI();
-
+//builder.Services.AddTransient<IUserinitServices, UserinitServices>();
+builder.Services.AddTransient<IUserinitServices, UserinitServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
