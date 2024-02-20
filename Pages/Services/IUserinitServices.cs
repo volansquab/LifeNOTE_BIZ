@@ -278,16 +278,26 @@ namespace LifeNOTE_BIZ.Pages.Services
             //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
             MemoryStream stream4 = new MemoryStream(byteArray4);
             // convert stream to string
-            StreamReader reader4 = new StreamReader(stream4);
+            StreamReader reader4 = new StreamReader(stream4); 
             XmlSerializer serializer2 = new XmlSerializer(typeof(TitleLists));
-            TitleLists myTitleLists = new TitleLists();
+            TitleLists titlelists = new TitleLists();
             titlelists = (TitleLists)serializer2.Deserialize(reader4);
 
 
-            foreach (var doc in titlelists.DocList)
+            //foreach (var doc in titlelists.Items)
+            //{
+            //    titlenamelist.Add(doc.Title);
+            //}
+
+            for (int i = 0; i <= titlelists.Items.Count - 1; i++)
             {
-                titlenamelist.Add(doc.Title);
+                var titlestr1 = (DocItem)titlelists.Items[i];
+                var titlestr3 = titlestr1.Title;
+                titlenamelist.Add(titlestr3);
             }
+
+
+
             return titlenamelist;
         }
 

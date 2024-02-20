@@ -1,68 +1,23 @@
-﻿namespace LifeNOTE_BIZ.Pages
+﻿using System.Xml.Serialization;
+
+namespace LifeNOTE_BIZ.Pages
 {
-    // メモ: 生成されたコードは、少なくとも .NET Framework 4.5または .NET Core/Standard 2.0 が必要な可能性があります。
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class TitleLists
+    [XmlRoot(ElementName = "TitleClass")]
+    public class TitleLists
     {
-
-        private ArrayOfDocListDocList[] docListField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("DocList")]
-        public ArrayOfDocListDocList[] DocList
-        {
-            get
-            {
-                return this.docListField;
-            }
-            set
-            {
-                this.docListField = value;
-            }
-        }
+        [XmlArray("Items")]
+        [XmlArrayItem("DocItem")]
+        public List<DocItem> Items { get; set; } = new List<DocItem>();
     }
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class ArrayOfDocListDocList
+    public class DocItem
     {
-
-        private string idField;
-
-        private string titleField;
-
-        /// <remarks/>
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string Title
-        {
-            get
-            {
-                return this.titleField;
-            }
-            set
-            {
-                this.titleField = value;
-            }
-        }
+        public string Id { get; set; }
+        public string Title { get; set; }
     }
-
-
 }
+
+
+
+
+
