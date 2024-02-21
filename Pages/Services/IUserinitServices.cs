@@ -165,7 +165,7 @@ namespace LifeNOTE_BIZ.Pages.Services
                 await blockBlob4.DownloadToStreamAsync(memoryStream4);
                 files4 = System.Text.Encoding.UTF8.GetString(memoryStream4.ToArray());
             }
-
+            List<string> tabnamelist = new List<string>();
             // convert string to stream
             byte[] byteArray4 = Encoding.UTF8.GetBytes(files4);
             //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
@@ -193,8 +193,7 @@ namespace LifeNOTE_BIZ.Pages.Services
                 }
                 else
                 {
-                    inacttitlenamelist.Add(titlename);
-                   
+                    inacttitlenamelist.Add(titlename);                   
                 }
             }
             return tabnamelist;
@@ -220,7 +219,7 @@ namespace LifeNOTE_BIZ.Pages.Services
                 await blockBlob4.DownloadToStreamAsync(memoryStream4);
                 files4 = System.Text.Encoding.UTF8.GetString(memoryStream4.ToArray());
             }
-
+            List<string> TabColours = new List<string>();
             // convert string to stream
             byte[] byteArray4 = Encoding.UTF8.GetBytes(files4);
             //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
@@ -272,7 +271,7 @@ namespace LifeNOTE_BIZ.Pages.Services
                 await blockBlob4.DownloadToStreamAsync(memoryStream4);
                 files4 = System.Text.Encoding.UTF8.GetString(memoryStream4.ToArray());
             }
-
+            List<string> titlenamelist = new List<string>();
             // convert string to stream
             byte[] byteArray4 = Encoding.UTF8.GetBytes(files4);
             //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
@@ -284,10 +283,7 @@ namespace LifeNOTE_BIZ.Pages.Services
             titlelists = (TitleLists)serializer2.Deserialize(reader4);
 
 
-            //foreach (var doc in titlelists.Items)
-            //{
-            //    titlenamelist.Add(doc.Title);
-            //}
+            
 
             for (int i = 0; i <= titlelists.Items.Count - 1; i++)
             {
