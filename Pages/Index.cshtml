@@ -48,21 +48,120 @@
         <title>Life NOTE</title>
         <body>
             <form method="post" name="firstbuttons" id="firstform">
-                <div class="firstelements" id="firstelements">
-                </div>
+                <div>
+                    <div class="firstelements" id="firstelements">
+                        <div class="row" style="height:auto;">
+                            <div class="itemtitle col-md-6">
+                                <div class="input-group">
+                                    <input class="form-control border-end-0 border" type="search" value="" id="search">
+                                    <span class="input-group-append">
+                                        <button id="searchbutton" class="btn btn-secondary" type="button" onclick="Search()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="itemtitle col-md-6">
+                                <div class="radios">
+                                    <div class="radio d-inline-block">
+                                        <label>
+                                            <input type="radio" name="field" id="optionsRadios1" value="tytle">
+                                            タイトル
+                                        </label>
+                                    </div>
+                                    <div class="radio d-inline-block">
+                                        <label>
+                                            <input type="radio" name="field" id="optionsRadios1" value="body" checked>
+                                            本文
+                                        </label>
+                                    </div>
+                                </div>
 
-            </form>
-            <form method="post" name="secoundbuttons" id="secoundbutton">
-                <div class="secondelements" id="secondform">
-                </div>
-            </form>
-            <form method="post" name="tytlecolumn" id="thirdform">
-                <div class="tab1" id="tab1">
-                    <div class="centered-element">
-                        <img class="openLink" style="width: 150px; height: 150px" title="開く" onclick="openDoc();" src="Open.png">
-
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </form>
+            <form method="post" name="secoundbuttons" id="secoundbutton">
+                <div>
+                    @{
+                        var htmlhead = "<div class=\"cp_tab\">";
+                        for (int i = 1; i <= IndexModel.tablists.Count; i++)
+                        {
+                            if (i == 1)
+                            {
+                                htmlhead = htmlhead + "<input type=\"radio\" name=\"cp_tab\" id=\"tab3_" + i + "\" aria-controls=\"" + IndexModel.Numbers[i - 1] + "\" checked onclick=\"TabClick(this.id)\">" +
+
+                                "                <label for=\"tab3_" + i + "\">" + IndexModel.tablists[i - 1] + "</label>";
+                            }
+                            else
+                            {
+                                htmlhead = htmlhead + "<input type=\"radio\" name=\"cp_tab\" id=\"tab3_" + i + "\" aria-controls=\"" + IndexModel.Numbers[i - 1] + "\"onclick=\"TabClick(this.id)\">" +
+
+                                "                <label for=\"tab3_" + i + "\">" + IndexModel.tablists[i - 1] + "</label>";
+                            }
+                        }
+                        @Html.Raw(htmlhead);
+                    }
+                    @{
+                        var htmlbody = "<div class=\"cp_tabpanels\">";
+
+                        for (int i = 1; i <= IndexModel.tablists.Count; i++)
+                        {
+                            if (i == IndexModel.selecttab)
+                            {
+
+                                htmlbody = htmlbody + "<div id=\"" + IndexModel.Numbers[i - 1] + "\" class=\"cp_tabpanel\">";
+
+                            }
+                            else
+                            {
+                                htmlbody = htmlbody + "<div id=\"" + IndexModel.Numbers[i - 1] + "\" class=\"cp_tabpanel\">" +
+
+                                "                    </div>";
+                            }
+                        }
+                        @Html.Raw(htmlbody);
+                    }
+                    @{
+                        var htmlfoot = "</div>";
+                        for (var i = 1; i <= IndexModel.tablists.Count; i++)
+                        {
+                            htmlfoot += "<div id=\"" + IndexModel.Numbers[i - 1] + "\" class=\"cp_tabpanel\">";
+                        }
+                        htmlfoot += "</div></div>";
+                        @Html.Raw(htmlfoot);
+                    }
+                </div>
+            </form>
+           <form method="post" name="tytlecolumn" id="thirdform" class="test">
+                <div>
+                    @{
+                        var listpane = "<div class=\"tab1\" id = \"tab1\" >" +
+
+                                "<ul class=\"same-width-list\" id=\"same-width-list\">";
+
+                        var label = "";
+                        for (var i = 0; i <= IndexModel.titlelists.Count - 1; i++)
+                        {
+                            var label_title = IndexModel.titlelists[i];
+                            label = label + "<li class=\"list-group-item\">" + @label_title + "</li>";
+                        }
+                        var listfoot = listpane + label + "</ul>" + "</ div >";
+                        @Html.Raw(listfoot);
+                    }
+                    <body onload="initDoc();">
+
+                        <form name="compForm" method="post" onsubmit="if(validateMode()){this.myDoc.value=oDoc.innerHTML;return true;}return false;">
+                            <input type="hidden" name="myDoc">
+
+                            <div id="textBox" contenteditable="true" style="@IndexModel.textheight">@Html.Raw(IndexModel.bodyelement)</div>
+                            <p id="editMode"><input type="hidden" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /></p>
+                            @*<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>*@
+                        </form>
+                    </body>
+                </div>
+                
             </form>
 
             @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -77,258 +176,7 @@
 
             <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
             <script type="text/javascript">
-                var oDoc, sDefTxt, locindx;
-
-                //タブが1個の場合はアクティブに
-                //tab.checked = true;
-                var titlev = "";
-                var rtime;
-                var timeout = false;
-                var delta = 2000;
-                var chkstr = "";
-                var tabnum = "";
-                /*document.location.reload()*/
-                //const loader = document.getElementById('loader');
-                //loader.style = "display:none;";
-                //loader.disabled;
-
-                var indx = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.selecttab)));
-
-                var numbers = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.Numbers)));
-
-                var allcolour = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.TabColours)));
-
-                var tabnamelist = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.tablists)));
-
-                var titlenamelist = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.titlelists)));
-
-                // Find the element you want to replace in the existing DOM
-                const elementToReplace = document.getElementById('firstform');
-                // Find the element you want to replace in the existing DOM
-                const elementToReplace2 = document.getElementById('secondform');
-                // Find the element you want to replace in the existing DOM
-                const elementToReplace3 = document.getElementById("tab1");
-
-                const bodystr = "";
-                const titlestr = "";
-
-
-                var colour = allcolour[indx];
-                var parentDiv = document.getElementById('tab1');
-                //parentDiv.style.backgroundColor = colour;
-                //parentDiv.style.backgroundImage = "url(tab1.png)";
-
-                function openDoc() {
-
-                    parentDiv.innerHTML = "";
-                    // Create the new HTML
-                    const newHTML1 = `
-                                                                            <div class="firstelements">
-                                                                                <div class="row" style="height:auto;">
-                                                                                    <div class="itemtitle col-md-6">
-                                                                                        <div class="input-group">
-                                                                                            <input class="form-control border-end-0 border" type="search" value="" id="search">
-                                                                                            <span class="input-group-append">
-                                                                                                <button id="searchbutton" class="btn btn-secondary" type="button" onclick="Search()">
-                                                                                                    <i class="fa fa-search"></i>
-                                                                                                </button>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="itemtitle col-md-6">
-                                                                                        <div class="radios">
-                                                                                            <div class="radio d-inline-block">
-                                                                                                <label>
-                                                                                                    <input type="radio" name="field" id="optionsRadios1" value="tytle">
-                                                                                                    タイトル
-                                                                                                </label>
-                                                                                            </div>
-                                                                                            <div class="radio d-inline-block">
-                                                                                                <label>
-                                                                                                    <input type="radio" name="field" id="optionsRadios1" value="body" checked>
-                                                                                                    本文
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        `;
-
-
-                    // Create the HTML content using JavaScript
-                    var html1 = '<div class="cp_tab">';
-                    for (var i = 1; i <= "@IndexModel.tablists.Count"; i++) {
-                        //差異部分
-                        if (i === 1) {
-                            html1 += '<input type="radio" name="cp_tab" id="tab3_' + i + '" aria-controls="' + numbers[i - 1] + '" checked onclick="TabClick(this.id)"> ' +
-                                '<label for="tab3_' + i + '">' + tabnamelist[i - 1] + '</label>';
-                        } else {
-                            html1 += '<input type="radio" name="cp_tab" id="tab3_' + i + '" aria-controls="' + numbers[i - 1] + '" onclick="TabClick(this.id)"> ' +
-                                '<label for="tab3_' + i + '">' + tabnamelist[i - 1] + '</label>';
-                        }
-                    }
-
-                    var html_head = '<div class="cp_tabpanels">';
-                    for (var i = 1; i <= "@IndexModel.selecttab"; i++) {
-                        if (i === 1) {
-                            html_head += '<div id="' + numbers[i - 1] + '" class="cp_tabpanel">';
-                        } else {
-                            html_head += '<div id="' + numbers[i - 1] + '" class="cp_tabpanel"></div>';
-                        }
-                    }
-
-
-
-                    var html_foot = '</div>';
-                    for (var i = 1; i <= "IndexModel.tabnamelist.Count"; i++) {
-                        html_foot += '<div id="' + numbers[i - 1] + '" class="cp_tabpanel"></div>';
-                    }
-                    html_foot += '</div></div>';
-                    const newHTML2 = html1 + html_head + html_foot
-
-                    const newHTML3 = `
-                                                                        <div class="tab1" id="tab1">
-
-                                                                                <ul class="same-width-list" id = "same-width-list" style="@IndexModel.textheight">
-                @for (int i = 0; i <= IndexModel.titlelists.Count - 1; i++)
-                {
-                    var label_title = IndexModel.titlelists[i];
-                                                                                                    <li class="list-group-item">@label_title</li>
-                }
-                                                                                </ul>
-                                                                        </div>
-                                                                    `;
-
-
-
-                    // Create a new div element to replace the existing <div class="input-group">
-                    const newElement = document.createElement('div');
-                    newElement.innerHTML = newHTML1;
-
-                    // Replace the old element with the new element
-                    elementToReplace.parentNode.replaceChild(newElement, elementToReplace);
-
-
-
-                    const newElement2 = document.createElement('div');
-                    newElement2.innerHTML = newHTML2;
-
-                    elementToReplace2.parentNode.replaceChild(newElement2, elementToReplace2);
-
-                    const newElement3 = document.createElement('div');
-                    newElement3.innerHTML = newHTML3;
-                    //newElement4.innerHTML = "";
-
-                    //elementToReplace3.parentNode.replaceChild(newElement4, elementToReplace3);
-                    elementToReplace3.parentNode.replaceChild(newElement3, elementToReplace3);
-
-                    var colour = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(IndexModel.TabColours[0])))
-                        document.getElementById('same-width-list').style.backgroundColor = colour;
-                    var element2 = document.getElementById('secondform')
-                }
-
-                function TabClick(id) {
-
-
-
-                    var tabno = id.split('_');
-                    const form = document.forms[1];
-                    FD = new FormData(form);
-
-
-                    FD.append("tabno", tabno[1]);
-                    FD.append("evnt", "tabclick");
-
-
-                    // aysnchronous fetch ajax
-                    fetch(form.action,
-                        {
-                            method: form.method,
-                            body: FD
-                        }
-                    )
-                        .catch(err => console.log("network error: " + err))
-
-                        .then(res => {
-
-                            res.json()
-                                .then(
-
-                                    res => {
-
-
-                                        var response = JSON.parse(res)
-
-
-                                        const newHTML3 = "<div class=\"tab1\" id=\"tab1\">" +
-                                            "<ul class=\"same-width-list\" id=\"same-width-list\" style=\"IndexModel.textheight\">";
-
-                                        let listItemsHTML = "";
-                                        let i = 0;
-                                        let i2 = 2;
-                                        response.titles.forEach(function (titleItem) {
-                                            const label_title = titleItem.title;
-                                            listItemsHTML += `<li class=\"list-group-item\" id="${i}" onclick="handleItemClick(${i},${response.tabloc})">${label_title}</li>`;
-
-                                            i = i + 1;
-                                        });
-
-                                        const bottom = "</ul></div>";
-
-                                        const newElement3 = document.createElement('div');
-
-                                        const html = newHTML3 + listItemsHTML + bottom;
-
-                                        newElement3.innerHTML = html;
-
-                                        //elementToReplace3.parentNode.replaceChild("test", elementToReplace3);
-                                        document.getElementById("tab1").innerHTML = html;
-                                        document.getElementById('same-width-list').style.backgroundColor = response.colour;
-                                    });
-                        })
-                }
-
-                function handleItemClick(id, indx2) {
-                    var element1 = document.getElementById('same-width-list');
-                    element1.parentNode.removeChild(element1);
-                    const form = document.forms[1];
-                    FD = new FormData(form);
-                    // データを FormData オブジェクトに投入します
-                    FD.append("indx", id);
-                    FD.append("tabno", indx2);
-                    FD.append("evnt", "listclick");
-                    // aysnchronous fetch ajax
-                    fetch(form.action,
-                        {
-                            method: form.method,
-                            body: FD
-                        }
-                    )
-                        // if any exceptions - log them
-                        .catch(err => console.log("network error: " + err))
-                        .then((response) => {
-                            return response.json()　//ここでBodyからJSONを返す
-                        })
-                        .then((result) => {
-                            Example(result);  //取得したJSONデータを関数に渡す
-                        })
-                }
-
-                //JSONデータを引数に受け取ってDOM操作を行う関数を作成
-                function Example(jsonObj) {
-                    const parsedObj = JSON.parse(jsonObj);
-                    //test parsedObj.body
-                    const textHTML = '<form name="compForm" method="post" onsubmit="if(validateMode()){this.myDoc.value=oDoc.innerHTML;return true;}return false;">' +
-                        '<input type="hidden" name="myDoc">' +
-                        '<div id="textBox" contenteditable="true">' + parsedObj.body + '</div>' +
-                        '<p id="editMode"><input type="hidden" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /></p>' +
-                        '</form>';
-
-                    document.getElementById("tab1").innerHTML = textHTML;
-                }
-
+                
             </script>
         </body>
     </head>

@@ -195,6 +195,12 @@ namespace LifeNOTE_BIZ.Pages
             TabColours = await TabColoursTaks;
             TitleNameLists = _userinit.GetInitialTitlesAsync(userOId, accountName, accessKey, selecttab);
             titlelists = await TitleNameLists;
+
+            IndexModel.datasize = titlelists.Count;
+
+            var height = 70 + 6 * (int)(datasize / 10);
+            textheight = "height: " + height + "vh;";
+
             //await Task.Delay(500);
         }
 
